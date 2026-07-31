@@ -61,4 +61,4 @@ const fortune =
   "Look down",
 ];
 
-module.exports = { icebreaker, eightBall, fortune };
+module.exports = { icebreaker, ateball, fortune };
