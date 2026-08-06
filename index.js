@@ -59,7 +59,8 @@ app.command("/twee-help", async ({ ack, respond }) => {
     "/twee-icebreaker: Random icebreaker question\n" +
     "/twee-8ball: Ask the magic 8-ball\n" +
     "/twee-fortune: Random fortune cookie\n" +
-    "Coming soon: /twee-hangman, /twee-wordle, /twee-emojify"
+    "/twee-wordle: Play a game of Wordle\n\n" +
+    "For more info: https://github.com/minye065/twee-bot/readme.md"
   });
 });
 

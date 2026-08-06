@@ -19,8 +19,20 @@ ask a question, get an answer
 fortune
 gives a fortune for freeeeee
 
+wordle [NEW]
+starts a wordle game
+
+how to play:
+use /twee-wordle to start
+then use /twee-wordle GUESS
+with your guess
+
+you get 6 tries
+if its red that means the letter isnt used
+if its yellow that means the letter is used but no right spot
+if its green that means the letter is in the right spot
+
 upcomming commands:
-wordle
 hangman
 emojify
 
