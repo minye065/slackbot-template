@@ -1,6 +1,12 @@
 require("dotenv").config();
 const { App } = require("@slack/bolt");
-const { icebreaker, ateball, fortune } = require("./array.js");
+const { icebreaker, ateball, fortune, wordleWords } = require("./array.js");
+
+let gameAnswer;
+let gameActive = false;
+let guessCount = 0;
+let guesses = [];
+let board;
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -28,6 +34,12 @@ function pickFortune()
 {
 	let magicNumber = randInclusive(0,22);
 	return fortune[magicNumber];
+}
+
+function pickWord()
+{
+    let magicNumber = randInclusive(0,30);
+    return wordleWords[magicNumber];
 }
 
 app.command("/twee-ping", async ({ command, ack, respond }) => {
@@ -89,9 +101,74 @@ app.command("/twee-hangman", async ({ ack, respond }) => {
   await respond({ text: "so this doesnt work yet" });
 });
 
-app.command("/twee-wordle", async ({ ack, respond }) => {
+app.command("/twee-wordle", async ({ command, ack, respond }) => {
   await ack();
-  await respond({ text: "so this doesnt work yet" });
+  const t = command.text.trim();
+
+  if (t === "")
+  {
+      gameAnswer =  pickWord();
+      gameActive = true;
+      guessCount = 0
+      guesses = [];
+      await respond ({text: "game started, guess a 5 letter word"});
+      return;
+  }
+  else if(t === "quit")
+  {
+      gameAnswer = "";
+      gameActive = false;
+      await respond({text: "game ended"});
+      return;
+  }
+  else if(t.length !== 5 || !/^[a-z]+$/.test(t.toLowerCase()))
+  {
+      await respond({text: "what is that bru"});
+      return;
+  }
+  if(gameActive == true && guessCount < 6)
+  {
+      const inputLetters = t.toLowerCase().split("");
+      const answerLetters = gameAnswer.split("");
+      let result = [];
+      for(let i = 0; i < 5; i ++)
+      {
+          if(answerLetters[i] == inputLetters[i])
+          {
+              result[i] = "🟩";
+          }
+          else if (answerLetters.includes((inputLetters[i])))
+          {
+              result[i] = "🟨";
+          }
+          else
+          {
+              result[i] = "🟥";
+          }
+      }
+      guessCount += 1;
+      guesses.push(result.join("") + " `" + t + "'");
+      board = guesses.join("\n")
+      if(t.toLowerCase() ==  gameAnswer)
+      {
+          gameActive = false;
+          await respond({ text: "you win ig\n" + board });
+      }
+      else if(guessCount == 6)
+      {
+          gameActive = false;
+          await respond({text: "ran out of guesses, try again"});
+      }
+      else 
+      {
+        await respond({ text: `Guess ${guessCount}/6:\n` + board });
+      }
+  }
+  else
+  {
+    await respond({ text: "no game found, start one with /twee-wordle" });
+    return;
+  }
 });
 
 app.command("/twee-emojify", async ({ ack, respond }) => {

@@ -61,4 +61,8 @@ const fortune =
   "Look down",
 ];
 
-module.exports = { icebreaker, ateball, fortune };
+const wordleWords = 
+["",
+];
+
+module.exports = { icebreaker, ateball, fortune, wordleWords };
