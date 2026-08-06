@@ -129,7 +129,7 @@ app.command("/twee-wordle", async ({ command, ack, respond }) => {
   if(gameActive == true && guessCount < 6)
   {
       const inputLetters = t.toLowerCase().split("");
-      const answerLetters = gameAnswer.split("");
+      const answerLetters = gameAnswer.toLowerCase().split("");
       let result = [];
       for(let i = 0; i < 5; i ++)
       {
@@ -147,17 +147,21 @@ app.command("/twee-wordle", async ({ command, ack, respond }) => {
           }
       }
       guessCount += 1;
-      guesses.push(result.join("") + " `" + t + "'");
+      guesses.push(result.join("") + " `" + t + "`");
       board = guesses.join("\n")
-      if(t.toLowerCase() ==  gameAnswer)
+      if(t.toLowerCase() ==  gameAnswer.toLowerCase())
       {
           gameActive = false;
-          await respond({ text: "you win ig\n" + board });
+          await respond({ text: `Guess ${guessCount}/6:\n` + board });
+          await respond({ text: "you win ig\n"});
       }
       else if(guessCount == 6)
       {
           gameActive = false;
-          await respond({text: "ran out of guesses, try again"});
+          await respond({ text: `Guess ${guessCount}/6:\n` + board });
+          await respond({ text: `ha imagine losing`});
+          await respond({text: `answer was ${gameAnswer}\n`});
+
       }
       else 
       {
