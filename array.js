@@ -61,8 +61,37 @@ const fortune =
   "Look down",
 ];
 
-const wordleWords = 
-["",
+const wordleWords = [
+  "GLYPH",
+  "FJORD",
+  "KNELT",
+  "DWELT",
+  "LYMPH",
+  "NYMPH",
+  "WRUNG",
+  "CRYPT",
+  "GHOUL",
+  "PLUMB",
+  "BRINE",
+  "CLEFT",
+  "DROIT",
+  "EXPAT",
+  "GAUZE",
+  "HEIST",
+  "JAUNT",
+  "KNACK",
+  "MULCH",
+  "OXIDE",
+  "PIQUE",
+  "QUALM",
+  "SHREW",
+  "THYME",
+  "USURP",
+  "VOUCH",
+  "WHELP",
+  "YACHT",
+  "ZESTY",
+  "BLURT"
 ];
 
 module.exports = { icebreaker, ateball, fortune, wordleWords };
